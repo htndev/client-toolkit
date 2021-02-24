@@ -10,8 +10,7 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'plugin:unicorn/recommended',
     'plugin:prettier/recommended',
-    'prettier',
-    'prettier/@typescript-eslint'
+    'prettier'
   ],
   parserOptions: {
     ecmaVersion: 2020
