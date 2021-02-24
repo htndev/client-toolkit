@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "prebuild": "npm run lint && rimraf dist xbeat-toolkit-*",
+    "prebuild": "npm run lint && rimraf dist xbeat-*",
     "build": "tsc",
     "prepack": "npm run build",
     "lint": "eslint .",
@@ -20,7 +20,6 @@
   "license": "ISC",
   "dependencies": {
     "@apollo/client": "^3.3.11",
-    "@types/omit-deep-lodash": "^1.1.1",
     "@xbeat/toolkit": "file:../toolkit/xbeat-toolkit-1.0.0.tgz",
     "apollo-cache-inmemory": "^1.6.6",
     "apollo-client": "^2.6.10",
@@ -31,6 +30,7 @@
   "devDependencies": {
     "@commitlint/cli": "^12.0.0",
     "@commitlint/config-conventional": "^12.0.0",
+    "@types/omit-deep-lodash": "^1.1.1",
     "@typescript-eslint/eslint-plugin": "^4.15.2",
     "@typescript-eslint/parser": "^4.15.2",
     "eslint": "^7.20.0",
