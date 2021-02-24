@@ -1,0 +1,13 @@
+# Project
+node_modules
+dist
+
+# Logs
+*.logs
+
+# Arhives
+*.tgz
+
+# Cache
+.eslintcache
+.cache
