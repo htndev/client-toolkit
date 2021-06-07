@@ -16,11 +16,11 @@
     "dist/**/*"
   ],
   "keywords": [],
-  "author": "Alexandr Vanilchuk <he4then.mail@gmail.com>",
+  "author": "Alexandr Vanilchuk <htn.developer@gmail.com>",
   "license": "ISC",
   "dependencies": {
     "@apollo/client": "^3.3.11",
-    "@xbeat/toolkit": "^1.0.0",
+    "@xbeat/toolkit": "file:../toolkit/xbeat-toolkit-1.0.0.tgz",
     "apollo-cache-inmemory": "^1.6.6",
     "apollo-client": "^2.6.10",
     "apollo-link": "^1.2.14",
