@@ -3,14 +3,13 @@ import { ApiEndpoint } from '@xbeat/toolkit';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import ApolloClient from 'apollo-client';
 import { ApolloLink } from 'apollo-link';
-import { onError } from '@apollo/client/link/error';
 import { createHttpLink as createApolloHttpLink } from 'apollo-link-http';
 import deepOmit from 'omit-deep-lodash';
 import { VuexModule } from 'vuex-module-decorators';
 
 export type TokensModule = VuexModule & { tokens: { [token in ApiEndpoint]: string } };
-type SetTokensFunction = (tokens: Record<string, string>) => void;
-type OnRequestFailedFunction = () => void | Promise<void>;
+type Tokens = { [k in ApiEndpoint]: string };
+export type SyncTokensFunction = () => Tokens | Promise<Tokens>;
 
 const HTTP_LINKS_OPTIONS = {
   credentials: 'include'
@@ -35,26 +34,9 @@ const removeTypename = new ApolloLink((operation, forward) => {
   return forward(operation).map(response => deepOmit(response, '__typename'));
 });
 
-const fetchTokensOnError = (onTokensSynced: SetTokensFunction, onRequestFailed: OnRequestFailedFunction): ApolloLink =>
-  onError(({ graphQLErrors, networkError, operation, forward }) => {
-    console.log(graphQLErrors, networkError);
-    if (graphQLErrors && graphQLErrors[0].message === 'Unauthorized') {
-      console.log('User need new tokens');
-      onTokensSynced;
-      onRequestFailed;
-    }
-  }) as any;
-
-export const createApolloClient = (
-  uri: string,
-  endpoint: ApiEndpoint,
-  module: TokensModule,
-  onTokensSynced: SetTokensFunction,
-  onRequestFailed: OnRequestFailedFunction
-): ApolloClient<unknown> =>
+export const createApolloClient = (uri: string, endpoint: ApiEndpoint, module: TokensModule): ApolloClient<unknown> =>
   new ApolloClient({
     link: ApolloLink.from([
-      fetchTokensOnError(onTokensSynced, onRequestFailed),
       appendAuthToken(module, endpoint),
       removeTypename,
       createApolloHttpLink({ ...HTTP_LINKS_OPTIONS, uri })
